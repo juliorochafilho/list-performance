@@ -11,30 +11,41 @@ import stringPathToObject from "../utils/functions";
 const Home: NextPage = () => {
   const [mockedDataState, setMockedDataState] = useState(mockedData);
   const [columns, setColumns] = useState([
-    { heading: "Nombre", key: "name", editable: true },
-    { heading: "Apellido", key: "nickname", editable: true },
-    { heading: "Status", key: "status", editable: false },
-    { heading: "Estado Civil", key: "marialState", editable: true },
+    {
+      heading: "Nombre",
+      key: "name",
+      editable: true,
+      handleEdit: (element, column, newValue) => {
+        console.log("1", element, column, newValue);
+      },
+    },
+    {
+      heading: "Apellido",
+      key: "nickname",
+      editable: true,
+      handleEdit: (element, column, newValue) => {
+        console.log("2", element, column, newValue);
+      },
+    },
+    {
+      heading: "Status",
+      key: "status",
+      editable: false,
+    },
+    {
+      heading: "Estado Civil",
+      key: "marialState",
+      editable: true,
+      handleEdit: (element, column, newValue) => {
+        console.log("3", element, column, newValue);
+      },
+    },
   ]);
 
   const [subColumns, setSubColumns] = useState([
     { heading: "Entrada", key: "punchs.timeIn.time" },
     { heading: "Salida", key: "punchs.timeOut.time" },
   ]);
-
-  // const [subElements, setSubElements] = useState([
-  //   { heading: "Nombre", key: "name" },
-  //   { heading: "Apellido", key: "nickname" },
-  //   { heading: "Status", key: "status" },
-  // ]);
-
-  // let myObj = {
-  //   timeIn: {
-  //     time: 2,
-  //   },
-  // };
-
-  // console.log(stringPathToObject(myObj, "timeIn.time", 100));
 
   return (
     <div className={styles.container}>

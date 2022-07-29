@@ -13,11 +13,7 @@ export default function List({
 }: any) {
   const [selectedRow, setSelectedRow] = useState(null);
 
-  const handleEdit = (element: any, key: any) => {
-    console.log(element);
-  };
-
-  const handleClick = (element: any, key: any) => {
+  const handleClickRow = (element: any) => {
     setSelectedRow(element);
   };
 
@@ -32,13 +28,8 @@ export default function List({
             <Line
               element={element}
               columns={columns}
-              isRowSelected={element._id === selectedRow}
-              handleClick={(element: any, key: any) =>
-                handleClick(element, key)
-              }
-              handleEdit={(element: any, key: any, newData: any) =>
-                handleEdit(element, key)
-              }
+              isRowSelected={element._id === selectedRow._id}
+              handleClickRow={(element: any) => handleClickRow(element)}
             />
           </>
         ))}

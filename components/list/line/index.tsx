@@ -4,32 +4,42 @@ export default function Line({
   element,
   columns,
   isRowSelected,
-  handleClick,
-  handleEdit,
+  handleClickRow,
 }: any) {
   const [editingData, setEditingData] = useState("");
-  const [editingKey, setEditingKey] = useState("");
+  const [editingElement, setEditingElement] = useState({});
+  const [editingColumn, setEditingColumn] = useState({
+    key: null,
+    handleEdit: (
+      editingElement: any,
+      editingColumn: any,
+      editingData: any
+    ) => {},
+  });
 
-  const handleClickEdit = (element: any, key: any) => {
-    handleClick(element, key);
-    setEditingKey(key);
+  const handleClickEdit = (element: any, column: any) => {
+    handleClickRow(element);
+    setEditingColumn(column);
+    setEditingElement(element);
   };
 
   return (
     <tr style={{ textAlign: "center" }} key={element._id}>
       {columns.map((column: any) => (
         <td
-          onClick={() => handleClickEdit(element._id, column.key)}
+          onClick={() => handleClickEdit(element, column)}
           style={{ textAlign: "center" }}
           key={column.heading}
         >
-          {isRowSelected && column.editable && column.key === editingKey ? (
+          {isRowSelected &&
+          column.editable &&
+          column.key === editingColumn.key ? (
             <input
               type="text"
               placeholder={element[column.key]}
               value={editingData}
               onChange={(e) => setEditingData(e.target.value)}
-              onFocus={() => setEditingKey(column.key)}
+              onFocus={() => setEditingColumn(column)}
             />
           ) : (
             element[column.key]
@@ -37,7 +47,11 @@ export default function Line({
         </td>
       ))}
       <td>
-        <button onClick={() => handleEdit(editingData, editingKey)}>
+        <button
+          onClick={() =>
+            editingColumn.handleEdit(editingElement, editingColumn, editingData)
+          }
+        >
           Editar
         </button>
       </td>
